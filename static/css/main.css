@@ -1,0 +1,118 @@
+/*
+
+#navbar {
+    background-color: peachpuff;
+}
+
+#navbar * {
+    display: inline-block;
+}
+
+#navbar a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#navbar a:hover {
+    background-color: steelblue;
+    color: black;
+}
+
+.header {
+    background-color: peachpuff;
+}
+
+*/
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: peachpuff;
+}
+
+.content {
+    margin: 1%;
+}
+
+#message_form * {
+    padding: 0.5em;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 1% 0;
+}
+
+#message { 
+    width: 100%; 
+    padding: 1% 0;
+}
+
+#message-label {
+    padding: 1% 0; 
+    float: left;
+}
+
+#manipulation-forms * {
+    padding: 0.5% 0;
+}
+
+#manipulation-forms > form > label {
+    display: inline-block;
+    min-width: 9%;
+}
+
+#manipulation-forms > form > input {
+    min-width: 20%;
+    padding: inherit 3%;
+}
+
+#message_bottles {
+    table-layout: fixed;
+    width: 100%;
+    margin-top: 1%;
+    border: 1px solid black;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+#message_bottles * {
+    border: 1px solid black;
+    padding: 0.5em;
+    max-height: 2.2em;
+    line-height: 1.1em;
+    overflow: hidden;
+}
+
+#pages * {
+    display: inline-block;
+}
+
+#curr-page {
+    color: red;
+}
+
+.center {
+    display: block;
+    width: 100;
+    margin: auto;
+    padding: 1% 0;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.decrypt-btn { background-color: orange; }
+
+.submit-btn { 
+    background-color: lightblue; 
+}
+

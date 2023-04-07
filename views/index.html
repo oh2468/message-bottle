@@ -1,0 +1,118 @@
+% import time
+% rebase("base.html")
+
+<div class="content">
+    <div class="welcome">
+        <h1 class="center center-text">WELCOME TO MY AMAZING MESSAGE BOARD!</h1>
+    </div>
+
+    <div id="input_block">
+        <form id="message_form" method="POST" action="/">
+            <input type="text" name="form-id" value="message" hidden>
+            <label class="column" for="sender">Sender (required):</label>
+            <label class="column" for="title">Title (required):</label>
+            <br>
+            <input class="column" type="text" id="sender" name="sender" required minlength="{{ restrictions['sender'][0] }}" maxlength="{{ restrictions['sender'][1] }}">
+            <input class="column" type="text" id="title" name="title" required minlength="{{ restrictions['title'][0] }}" maxlength="{{ restrictions['title'][1] }}">
+            <br>
+            <label class="column" for="available">Days Available (required):</label>
+            <label class="column" for="password">Password:</label>
+            <br>
+            <input class="column" type="number" name="available" id="available" min="{{ restrictions['available'][0] }}" max="{{ restrictions['available'][1] }}" required>
+            <input class="column" type="password" name="password" id="password">
+            <br>
+
+            <label for="message" id="message-label">Message:</label>
+            <textarea class="center" name="message" id="message" cols="50" rows="3" maxlength="{{ restrictions['message'][1] }}" placeholder="Enter your message here! (required)" required></textarea>
+            <br>
+            <input class="center submit-btn" id="bottle-btn" type="submit" value="Bottle the Message!">
+        </form>
+    </div>
+
+    <div class="center" id="output_block">
+        <div>
+            <h1 class="center-text"> - Message Bottles: {{ num_msgs }} of {{ tot_msgs }} - </h1>
+        </div>
+
+        <div id="manipulation-forms">
+            <form id="sort-form" method="POST" action="/1">
+                <input type="text" name="form-id" value="sort" hidden>
+                <label for="sorting">Select Sorting:</label>
+                <select name="sorting" id="sorting" class="submit-btn">
+                    % for sort_opt in sorting_options:
+                        % if sort_opt == sorting_on:
+                        <option value="{{ sort_opt }}" selected>{{ sort_opt }}</option>
+                        % else:
+                        <option value="{{ sort_opt }}">{{ sort_opt }}</option>
+                        % end
+                    % end
+                </select>
+            </form>
+
+            <form id="filter-form" method="POST" action="/1">
+                <input type="text" name="form-id" value="filter" hidden>
+                <label>Select filtering:</label>
+                <input type="text" name="sender" value="{{ filtering_on.get('sender', '') }}" placeholder="Sender" maxlength="20">
+                <input type="text" name="title" value="{{ filtering_on.get('title', '') }}" placeholder="Title" maxlength="20">
+                <input type="text" name="message" value="{{ filtering_on.get('message', '') }}" placeholder="Message" maxlength="20">
+                <input type="submit" class="submit-btn" value="Filter">
+            </form>
+
+            <form id="reset-form" action="#">
+                <!-- <input type="text" name="form-id" value="reset" hidden> -->
+                <label>Select Reset:</label>
+                <input type="submit" class="submit-btn" value="Reset to Default">
+            </form>
+            
+        </div>
+
+        <div>
+            <table id="message_bottles">
+                <thead id="bottle-columns">
+                    <th>Sender</th>
+                    <th>Title</th>
+                    <th colspan="2">Message</th>
+                    <th>Posted</th>
+                    <th>Available Until</th>
+                </thead>
+                <tbody id="bottle-content">
+                    % for message in messages:
+                        <tr value="{{ message[0] }}">
+                            <td>{{ message[1] }}</td>
+                            <td>{{ message[2] }}</td>
+                            <td colspan="2">
+                            % if message[3]:
+                                {{ message[3] }}
+                            % else:
+                                <button class="decrypt-btn center">Decrypt Message</button>
+                            % end
+                            </td>
+                            <td>{{ time.strftime(dateformat, time.localtime(message[4])) }}</td>
+                            <td>{{ time.strftime(dateformat, time.localtime(message[5])) }}</td>
+                        </tr>
+                    % end
+                </tbody>
+            </table>
+        </div>
+        
+        <div>
+            <ul id="pages" class="center-text">
+                <li id="left-url"><a href="prev">&lt;</a></li>
+                % for i in range(1, pages + 1):
+                    % if i == curr_page:
+                    <li value="{{ i }}"><a id="curr-page" class="actual-page-number" href="/{{ i }}">{{ i }}</a></li>
+                    % else:
+                    <li value="{{ i }}"><a class="actual-page-number" href="/{{ i }}">{{ i }}</a></li>
+                    % end
+                % end
+                <li id="right-url"><a href="next">&gt;</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <form id="page-changer" method="POST" action="#"></form>
+        </div>
+
+    </div>
+</div>
+
